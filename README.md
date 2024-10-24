@@ -8,5 +8,6 @@
 
 # Запуск
 1. `php artisan migrate` - запустить миграцию
-2. `php artisan app:generate-events-file` - сгенерирует файл events.json c 10000 событий для 1000 пользователей. События от 1 до 10.
-3. `php artisan app:fetch-messages` - запустит обработку файла и наполнит очереди
+2. Перезапустить контейнер (TODO: фикс энтрипоинта)
+3. `php artisan app:generate-events-file` - сгенерирует файл events.json c 10000 событий для 1000 пользователей. События от 1 до 10.
+4. `php artisan app:fetch-messages` - запустит обработку файла и наполнит очереди
