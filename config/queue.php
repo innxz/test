@@ -109,4 +109,16 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'users_events' => [
+        'event_user_queue_1',
+        'event_user_queue_2',
+        'event_user_queue_3',
+        'event_user_queue_4',
+        'event_user_queue_5',
+        'event_user_queue_6',
+        'event_user_queue_7',
+        'event_user_queue_8',
+        'event_user_queue_9',
+        'event_user_queue_10',
+    ],
 ];

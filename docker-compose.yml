@@ -1,0 +1,38 @@
+services:
+    php:
+        build: .docker/php
+        volumes:
+            - .:/var/www:cached
+
+    redis:
+        image: redis:latest
+        command: redis-server --appendonly yes
+        volumes:
+            - .docker/redis/data:/data
+        ports:
+            - 6379:6379
+
+    postgres:
+        image: postgres:alpine
+        container_name: db
+        env_file:
+            - .env
+        ports:
+            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        volumes:
+            - database-data:/var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        restart: unless-stopped
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: 4G
+
+volumes:
+    database-data:
