@@ -1,10 +1,14 @@
 services:
-    php:
-        build: .docker/php
+    app:
+        container_name: app
+        build:
+            context: .
+            dockerfile: .docker/php/Dockerfile
         volumes:
-            - .:/var/www:cached
+            - .:/var/www
 
     redis:
+        container_name: redis
         image: redis:latest
         command: redis-server --appendonly yes
         volumes:
@@ -12,7 +16,7 @@ services:
         ports:
             - 6379:6379
 
-    postgres:
+    db:
         image: postgres:alpine
         container_name: db
         env_file:
