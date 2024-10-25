@@ -29,10 +29,7 @@ final class GenerateEventsFileCommand extends Command
             $data = [];
 
             for ($i = 1; $i <= 10000; $i++) {
-                $data[] = [
-                    'user_id' => rand(1, 1000),
-                    'event_id' => rand(1, 10),
-                ];
+                $data[] = $this->generateUserEvent($data);
             }
 
             Storage::put('events.json', json_encode($data));
@@ -41,5 +38,27 @@ final class GenerateEventsFileCommand extends Command
         } catch (\Throwable $exception) {
             $this->error($exception->getMessage());
         }
+    }
+
+    private function generateUserEvent(array $usersEvents): array
+    {
+        $userId = rand(1, 1000);
+
+        $lastRecord = null;
+
+        foreach (array_reverse($usersEvents) as $userEvent) {
+            if ($userEvent['user_id'] === $userId) {
+                $lastRecord = $userEvent;
+
+                break;
+            }
+        }
+
+        $eventId = $lastRecord ? $lastRecord['event_id'] + 1 : 1;
+
+        return [
+            'user_id' => $userId,
+            'event_id' => $eventId,
+        ];
     }
 }
